@@ -93,18 +93,22 @@ public class SearchDevice extends Activity {
                 if (READ_STATUS_COMMAND == lastSentCommand) {
                     if (message.length() >= 6) {
 
-                        if (0 == (byte) message.charAt(0)) {
+                        if (0 == (int) message.charAt(0)) {
                             tvHeaterValue.setText("OFF");
                         } else {
                             tvHeaterValue.setText("ON");
                         }
-                        if (0 == (byte) message.charAt(1)) {
+                        if (0 == (int) message.charAt(1)) {
                             tvLightValue.setText("OFF");
                         } else {
                             tvLightValue.setText("ON");
                         }
-                        tvHumidityValue.setText(new char[]{message.charAt(2)}, 0, 1);
-                        tvTempValue.setText(new char[]{message.charAt(3)}, 0, 1);
+                        int b = (int)message.charAt(2);
+                        tvHumidityValue.setText(String.valueOf(b).toCharArray(), 0, 1);
+                        //tvHumidityValue.setText(new char[]{message.charAt(2)}, 0, 1);
+                        b = (int)message.charAt(3);
+                        tvTempValue.setText(String.valueOf(b).toCharArray(), 0, 1);
+                        //tvTempValue.setText(new char[]{message.charAt(3)}, 0, 1);
 
                         tvReadStatusResult.setText("OK");
                         tvUpdateTimeResult.setText("N.A.");
@@ -265,9 +269,9 @@ public class SearchDevice extends Activity {
                 int second = Calendar.getInstance().get(Calendar.SECOND);
                 sendCommand[0] = 0x23;
                 sendCommand[1] = 0x0;
-                sendCommand[2] = (byte)(Integer.parseInt(etMinTemp.getText().toString()));
+                sendCommand[2] = (byte)(Integer.parseInt(etMaxTemp.getText().toString()));
                 checksumCommand[0] = sendCommand[2];
-                sendCommand[3] = (byte)(Integer.parseInt(etMaxTemp.getText().toString()));
+                sendCommand[3] = (byte)(Integer.parseInt(etMinTemp.getText().toString()));
                 checksumCommand[1] = sendCommand[3];
                 sendCommand[4] = (byte)calculateChecksum(checksumCommand);
 
@@ -333,7 +337,7 @@ public class SearchDevice extends Activity {
                 tvSetTempResult.setText("N.A.");
                 tvSetStartStopTimeResult.setText("N.A.");
 
-                lastSentCommand = SET_TEMP_COMMAND;
+                lastSentCommand = SET_TIME_COMMAND;
 
                 bt.send(sendCommand, false);
             }
