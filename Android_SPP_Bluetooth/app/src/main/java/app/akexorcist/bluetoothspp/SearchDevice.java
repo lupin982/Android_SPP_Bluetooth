@@ -104,10 +104,10 @@ public class SearchDevice extends Activity {
                             tvLightValue.setText("ON");
                         }
                         int b = (int)message.charAt(2);
-                        tvHumidityValue.setText(String.valueOf(b).toCharArray(), 0, 1);
+                        tvHumidityValue.setText(String.valueOf(b).toCharArray(), 0, String.valueOf(b).toCharArray().length);
                         //tvHumidityValue.setText(new char[]{message.charAt(2)}, 0, 1);
                         b = (int)message.charAt(3);
-                        tvTempValue.setText(String.valueOf(b).toCharArray(), 0, 1);
+                        tvTempValue.setText(String.valueOf(b).toCharArray(), 0, String.valueOf(b).toCharArray().length);
                         //tvTempValue.setText(new char[]{message.charAt(3)}, 0, 1);
 
                         tvReadStatusResult.setText("OK");
